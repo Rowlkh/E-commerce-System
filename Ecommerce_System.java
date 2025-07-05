@@ -14,7 +14,6 @@ import java.util.Scanner;
  *
  * @author Roaa
  */
-
 public class Ecommerce_System {
 
     public static ArrayList<Product> products = new ArrayList<>();
@@ -27,13 +26,15 @@ public class Ecommerce_System {
         Scanner sc = new Scanner(System.in);
         boolean running = true;
 
-        while (running) {
+        while (running)
+        {
             displayProducts();
 
             System.out.print("\nChoose an option (1. Display Cart | 2. Checkout | 3. Add to Cart): ");
             int choice = sc.nextInt();
 
-            switch (choice) {
+            switch (choice)
+            {
                 case 1:
                     displayCart();
                     break;
@@ -49,7 +50,10 @@ public class Ecommerce_System {
 
             System.out.print("\nDo you want to continue? (1 = yes / 0 = no): ");
             int cont = sc.nextInt();
-            if (cont == 0) running = false;
+            if (cont == 0)
+            {
+                running = false;
+            }
         }
 
         System.out.println("Thank you for using the system.");
@@ -72,7 +76,8 @@ public class Ecommerce_System {
         System.out.printf("| # | Name           | Price (EGP)| Quantity | Shippable       | Expiration   |\n");
         System.out.println("---------------------------------------------------------------------------------------");
 
-        for (int i = 0; i < products.size(); i++) {
+        for (int i = 0; i < products.size(); i++)
+        {
             Product p = products.get(i);
             String shippable = p.getShippable() ? "Yes (" + p.getWeight() + " kg)" : "No";
             String expiry = (p.getExpiration_date() != null) ? p.getExpiration_date().toLocalDate().toString() : "N/A";
@@ -84,7 +89,8 @@ public class Ecommerce_System {
     }
 
     public static void displayCart() {
-        if (cart.isEmpty()) {
+        if (cart.isEmpty())
+        {
             System.out.println("Your cart is empty.");
             return;
         }
@@ -94,7 +100,8 @@ public class Ecommerce_System {
         System.out.println("---------------------------------------------------------------");
 
         int index = 1;
-        for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
+        for (Map.Entry<Product, Integer> entry : cart.entrySet())
+        {
             Product p = entry.getKey();
             int qty = entry.getValue();
             double total = p.getPrice() * qty;
@@ -109,15 +116,17 @@ public class Ecommerce_System {
         System.out.print("Enter the product number to add to cart: ");
         int productNumber = sc.nextInt();
 
-        if (productNumber < 1 || productNumber > products.size()) {
+        if (productNumber < 1 || productNumber > products.size())
+        {
             System.out.println("Invalid product number.");
             return;
         }
 
         Product selectedProduct = products.get(productNumber - 1);
 
-        if (selectedProduct.getExpiration_date() != null &&
-                selectedProduct.getExpiration_date().isBefore(LocalDateTime.now())) {
+        if (selectedProduct.getExpiration_date() != null
+                && selectedProduct.getExpiration_date().isBefore(LocalDateTime.now()))
+        {
             System.out.println("Product expired.");
             return;
         }
@@ -125,7 +134,8 @@ public class Ecommerce_System {
         System.out.print("Enter quantity: ");
         int quantity = sc.nextInt();
 
-        if (quantity < 1 || quantity > selectedProduct.getQuantity()) {
+        if (quantity < 1 || quantity > selectedProduct.getQuantity())
+        {
             System.out.println("Invalid quantity.");
             return;
         }
@@ -137,7 +147,8 @@ public class Ecommerce_System {
     }
 
     public static void checkout() {
-        if (cart.isEmpty()) {
+        if (cart.isEmpty())
+        {
             System.out.println("Cart is empty.");
             return;
         }
@@ -145,18 +156,21 @@ public class Ecommerce_System {
         double subtotal = 0;
         double shippingWeight = 0;
 
-        for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
+        for (Map.Entry<Product, Integer> entry : cart.entrySet())
+        {
             Product p = entry.getKey();
             int qty = entry.getValue();
 
-            if (p.getExpiration_date() != null && p.getExpiration_date().isBefore(LocalDateTime.now())) {
+            if (p.getExpiration_date() != null && p.getExpiration_date().isBefore(LocalDateTime.now()))
+            {
                 System.out.println("Product " + p.getName() + " has expired. Cannot proceed.");
                 return;
             }
 
             subtotal += p.getPrice() * qty;
 
-            if (p.getShippable()) {
+            if (p.getShippable())
+            {
                 shippingWeight += p.getWeight() * qty;
             }
         }
@@ -164,24 +178,35 @@ public class Ecommerce_System {
         double shippingFee = shippingWeight > 0 ? 20 + (5 * shippingWeight) : 0;
         double total = subtotal + shippingFee;
 
-        if (customerBalance < total) {
+        if (customerBalance < total)
+        {
             System.out.println("Insufficient balance.");
             return;
         }
 
-        if (shippingWeight > 0) {
+        if (shippingWeight > 0)
+        {
             System.out.println("\n** Shipment Notice **");
-            for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
+            ArrayList<ShippableItems> shippableItems = new ArrayList<>();
+
+            for (Map.Entry<Product, Integer> entry : cart.entrySet())
+            {
                 Product p = entry.getKey();
-                if (p.getShippable()) {
-                    System.out.println(entry.getValue() + "x " + p.getName() + " " + (p.getWeight() * entry.getValue()) + " kg");
+                if (p.getShippable())
+                {
+                    for (int i = 0; i < entry.getValue(); i++)
+                    {
+                        shippableItems.add(p);
+                    }
                 }
             }
-            System.out.printf("Total package weight: %.2f kg\n", shippingWeight);
+
+            ShippingService.shipItems(shippableItems);
         }
 
         System.out.println("\n** Checkout Receipt **");
-        for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
+        for (Map.Entry<Product, Integer> entry : cart.entrySet())
+        {
             Product p = entry.getKey();
             int qty = entry.getValue();
             System.out.println(qty + "x " + p.getName() + " " + (p.getPrice() * qty) + " EGP");

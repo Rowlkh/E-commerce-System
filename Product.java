@@ -11,7 +11,7 @@ import java.util.HashMap;
  *
  * @author Roaa
  */
-public class Product {
+public class Product implements ShippableItems{
     private String name;
     private double price;
     private int quantity;
