@@ -18,9 +18,15 @@ public class Ecommerce_System {
 
     public static ArrayList<Product> products = new ArrayList<>();
     public static HashMap<Product, Integer> cart = new HashMap<>();
-    public static double customerBalance = 1000.0;
+    public static double customerBalance = 20000.0;
 
     public static void main(String[] args) {
+        
+        // Exmaple used in the problem 
+        exampleDemo() ;
+        
+        
+        
         initializeProducts();
 
         Scanner sc = new Scanner(System.in);
@@ -222,4 +228,20 @@ public class Ecommerce_System {
 
         cart.clear();
     }
+    public static void exampleDemo() {
+    Product cheese = new Product("Cheese", 100, 10, LocalDateTime.now().plusMonths(1), true, 0.2);
+    Product tv = new Product("TV", 5000, 5, null, true, 5.0);
+    Product scratchCard = new Product("Scratch Card", 10, 50, null, false, 0.0);
+
+    products.add(cheese);
+    products.add(tv);
+    products.add(scratchCard);
+
+    cart.put(cheese, 2);
+    cart.put(tv, 3);
+    cart.put(scratchCard, 1);
+
+    checkout();
+}
+
 }
