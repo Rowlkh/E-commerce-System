@@ -46,7 +46,7 @@ Run to:
 ## Output
 Click the image below to watch a short demo video showing how the system works step by step:
 
-[![Watch Demo](Output\demoOutput.png)](https://drive.google.com/drive/folders/1UaKuS4L6XpRRCLSszzMYgG8QMlv-ihdf?usp=sharing)
+[![Watch Demo](Output/demoOutput.png)](https://drive.google.com/drive/folders/1UaKuS4L6XpRRCLSszzMYgG8QMlv-ihdf?usp=sharing)
 
 
 
