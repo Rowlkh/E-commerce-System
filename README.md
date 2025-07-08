@@ -45,8 +45,11 @@ Run to:
 
 ## Output
 Click the image below to watch a short demo video showing how the system works step by step:
-
-[![Watch Demo](Output/demoOutput.png)](https://drive.google.com/drive/folders/1UaKuS4L6XpRRCLSszzMYgG8QMlv-ihdf?usp=sharing)
+<p align="center">
+  <a href="https://drive.google.com/drive/folders/1UaKuS4L6XpRRCLSszzMYgG8QMlv-ihdf?usp=sharing">
+    <img src="Output/demoOutput.png" alt="Watch Demo" />
+  </a>
+</p>
 
 
 
