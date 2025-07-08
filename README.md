@@ -44,7 +44,7 @@ Run to:
 - The system tracks customer balance and updates it after each checkout.
 
 ## Output
-<p align="center">
+<p>
 Click the image below to watch a short demo video showing how the system works step by step, or <a href="Output/">download the video from the Output folder</a>.
 </p>
 <p align="center">
